@@ -173,7 +173,7 @@ class Table:
 	def _locateUnit(self, cell):
 		""" Returns the index of the parenthesis that surrounds the constant uncertainty and the unit, if it exists """
 		try:
-			return re.search(r"\([^()]+\)\s*(\()[^()]+\)$", cell).start(1)
+			return re.search(r"(\()±?[^()]+\)$", cell).start(1)
 		except AttributeError:
 			return len(cell)
 
