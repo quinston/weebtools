@@ -1,0 +1,10 @@
+\begin{tabu} to 3in {|X[c]|X[r]X[l]|X[r]X[l]|} \tabucline[tblOuter]{-}
+\multicolumn{1}{|[tblOuter]c|}{\textsc{Index}}&\multicolumn{2}{c|}{\textsc{Length} (cm)}&\multicolumn{2}{c|[tblOuter]}{\textsc{Temperature} (K)}\\
+\multicolumn{1}{|[tblOuter]c|}{}&\multicolumn{2}{c|}{(±.05cm)}&\multicolumn{2}{c|[tblOuter]}{}\\ \tabucline{-}
+\multicolumn{1}{|[tblOuter]c|}{1}&\multicolumn{1}{r@{}}{30}&\multicolumn{1}{@{}l|}{.03}&\multicolumn{1}{r@{}}{5550}&\multicolumn{1}{@{}l|[tblOuter]}{±2
+}\\ \tabucline{-}
+\multicolumn{1}{|[tblOuter]c|}{2}&\multicolumn{1}{r@{}}{50}&\multicolumn{1}{@{}l|}{.99}&\multicolumn{1}{r@{}}{151.355}&\multicolumn{1}{@{}l|[tblOuter]}{±.917
+}\\ \tabucline{-}
+\multicolumn{1}{|[tblOuter]c|}{3}&\multicolumn{1}{r@{}}{15}&\multicolumn{1}{@{}l|}{.13}&\multicolumn{1}{r@{}}{153333}&\multicolumn{1}{@{}l|[tblOuter]}{±1
+}\\ \tabucline[tblOuter]{-} \tabuphantomline
+\end{tabu}

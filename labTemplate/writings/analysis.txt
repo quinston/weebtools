@@ -1,0 +1,1 @@
+Using Equation~\ref{eq:consme12-11}, the period was found to be (0.0167±.0006) s. The frequency of the ticker time was found to be (59.88±.04) Hz, very close to the supposed 60 Hz. With the uncertainties of both position and time known, proper analysis could begin. 

@@ -1,0 +1,23 @@
+The kinetic and potential energy of the cans were taken as related so:
+\begin{align}
+\tfrac{1}{2}I_{com}\omega^2+\tfrac{1}{2}mv_{com}^2 &= mgh \label{eq:consme12-11}
+\end{align}\citeEq{hrw9}
+Where:
+\begin{vardefs}
+\item $I_{com}$ = rotational inertia about axis through the centre of mass (kg m$^2$)
+\item $\omega$ = angular speed there (rad s$^{-2}$)
+\item $v_{com}$ = speed when $h = 0$ (m s$^{-1}$)
+\item $m$ = mass (kg)
+\item $g$ = free fall acceleration (taken as 9.8 m s$^{-2}$)
+\item $h$ = initial height (m)
+\end{vardefs}
+
+Function uncertainties were computed by the method of quadratures:
+\begin{align}
+\sigma_f &= \sqrt{\sum\limits_{k=1}^{n}\left(\frac{\partial{}f}{\partial{}x_k}\sigma_{x_k}\right)^2}
+\end{align}\citeEq{vbUnc}
+Where:
+\begin{vardefs}
+\item $f$ = Some function with parameters $x_1, \cdots, x_n$
+\item $\sigma$ = Uncertainty of subscript
+\end{vardefs}

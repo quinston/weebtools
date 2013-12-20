@@ -1,0 +1,295 @@
+\iffalse
+Copyright (c) 2013, Quincy Lam 
+All rights reserved. 
+
+Redistribution and use in source and binary forms, with or without 
+modification, are permitted provided that the following conditions are met: 
+
+ * Redistributions of source code must retain the above copyright notice, 
+   this list of conditions and the following disclaimer. 
+ * Redistributions in binary form must reproduce the above copyright 
+   notice, this list of conditions and the following disclaimer in the 
+   documentation and/or other materials provided with the distribution. 
+ * Neither the name of  nor the names of its contributors may be used to 
+   endorse or promote products derived from this software without specific 
+   prior written permission. 
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+POSSIBILITY OF SUCH DAMAGE. 
+\fi
+\documentclass[letterpaper,12pt,twocolumn]{memoir}
+\usepackage{fontspec}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{verbatim}
+\usepackage[backend=biber,style=authoryear,firstinits=true,useprefix=true]{biblatex}
+\usepackage{tabu}
+\usepackage{dcolumn}
+\addbibresource{../lab2.bib}
+
+%vB format: Name, S.[, and Name, S.], Title/URL with Edition, Year
+%http://tex.stackexchange.com/questions/12806/guidelines-for-customizing-biblatex-styles 
+
+	%Use comma as bibliography unit separator
+	\renewcommand*{\newunitpunct}{\addcomma\space}
+
+	%Oxford comma in author list
+	\renewcommand*{\finalnamedelim}{\addcomma\space{}and\space}
+
+	%Write all names in the bibliography last-first
+	\DeclareNameAlias{sortname}{last-first}
+
+	% Take the year out of the author unit
+	\renewbibmacro*{author}{%
+	  \ifboolexpr{
+		test \ifuseauthor
+		and
+		not test {\ifnameundef{author}}
+	  }
+		{\usebibmacro{bbx:dashcheck}
+		   {\bibnamedash}
+		   {\usebibmacro{bbx:savehash}%
+		    \printnames{author}%
+		\iffieldundef{authortype}
+		  {\setunit{\addspace}}
+		  {\setunit{\addcomma\space}}}%
+		 \iffieldundef{authortype}
+		   {}
+		   {\usebibmacro{authorstrg}%
+		\setunit{\addspace}}}%
+		{\global\undef\bbx@lasthash
+		 \usebibmacro{labeltitle}%
+		 \setunit*{\addspace}}%
+	  %\usebibmacro{date+extrayear}
+	}
+
+	% Remove the parentheses from the year
+	\renewbibmacro*{date+extrayear}{%
+		\iffieldundef{year}
+		  {\printdateextra}
+		  {\printfield{year}}
+	}
+
+	% Add the year to the end of the publishing line
+	\newbibmacro*{publisher+location+date}{%
+	  \printlist{location}%
+	  \iflistundef{publisher}
+		{\setunit*{\addcomma\space}}
+		{\setunit*{\addcolon\space}}%
+	  \printlist{publisher}%
+	  \setunit*{\addcomma\space}%
+	  \usebibmacro{date+extrayear}%
+	  \newunit}
+
+	%Or if it has no publisher...
+	\newbibmacro*{location+date}{%
+	  \printlist{location}%
+	  \setunit*{\addcomma\space}%
+	  \usebibmacro{date+extrayear}%
+	  \newunit}
+
+	%Remove the URL: prefix and print the year
+	\DeclareFieldFormat[online]{url}{#1\addcomma\space\printdate}
+
+	%Comma between author and year in inline citations
+	\renewcommand*{\nameyeardelim}{\addcomma\addspace}
+
+	%Remove period from end of bibliography entries
+	\renewcommand*{\finentrypunct}{}
+
+	%Remove builtin bibliography title and page break
+	\defbibheading{bibliography}{}
+
+	%Bibliography font: 8pt bold italics
+	\renewcommand*{\bibfont}{\itshape\bfseries\tiny}
+
+	%Titles must be italicized even amidst italic text
+	\DeclareFieldFormat{title}{\textit{#1}}
+
+\setmainfont{FreeSerif}
+
+\setstocksize{11in}{8.5in}
+
+% Left, right, ratio
+% Want 1 inch margins
+\setlrmarginsandblock{1in}{1in}{*}
+
+% Top, bottom, ratio
+\setulmarginsandblock{1in}{1in}{*}
+
+% Gutter, centre line thickness
+\setcolsepandrule{0.5in}{0in}
+\setbeforesecskip{1em}
+\setsecheadstyle{\normalsize\scshape\centering}
+\setaftersecskip{1em}
+
+% Subsections woot
+\setbeforesubsecskip{0.5em}
+\setsubsecheadstyle{\noindent\normalsize\scshape\textbf}
+\setaftersubsecskip{0.5em}
+% Paragraph indent
+\setlength{\parindent}{0.3in}
+\checkandfixthelayout
+
+\captionnamefont{\footnotesize}
+\captiontitlefont{\footnotesize}
+\captionstyle{\raggedright}
+
+% Compress list spacing
+\tightlists
+
+% Skip a line after each list (http://tex.stackexchange.com/questions/44885/how-to-do-a-line-break-after-an-itemize)
+\let\EndItemize\enditemize
+\def\enditemize{\EndItemize\bigskip}
+
+% Make variable definition lists 10pt with no bullets
+\newenvironment*{vardefs}{\begin{itemize}[ ]\footnotesize}{\end{itemize}}
+
+% Surrounds the equation numbers with brackets rather than the default parantheses
+\newtagform{brackets}{[}{]}
+\usetagform{brackets}
+
+\renewcommand*{\thesection}{\Roman{section}}
+\renewcommand*{\thefigure}{\arabic{figure}}
+
+%%%%%%%%%%%%%%%%%%%% DEFINES BEGIN
+% This puts the author name in 12pt small caps and their title beneath in 9pt italics
+\newcommand*{\nameTitle}[2]{\begin{Spacing}{0.75}{\normalsize\textsc{#1}}\end{Spacing}{\scriptsize\textit{#2}}\\\vspace{1em}}
+\newcommand*{\makeFig}[2]{\begin{figure}[h]\centering\includegraphics[width=3in]{#1}\captionwidth{3.0in}\changecaptionwidth\caption{#2\label{fig:#1}}\end{figure}}
+\newcommand*{\makeWideFig}[2]{\begin{figure*}[]\centering\includegraphics[width=6.5in]{#1}\captionwidth{6.5in}\changecaptionwidth\caption{#2\label{fig:#1}}\end{figure*}}
+
+\newcommand*{\citeEq}[1]{\begin{flushright}\tiny\parencite{#1}\end{flushright}}
+
+\newcommand*{\makeTable}[2]{\begin{figure}[h]\input{#1}\captionwidth{2.4in}\changecaptionwidth\caption{#2\label{fig:#1}}\end{figure}}
+\newcommand*{\makeWideTable}[2]{\begin{figure*}[]\input{#1}\captionwidth{5.9in}\changecaptionwidth\caption{#2\label{fig:#1}}\end{figure*}}
+
+\definecolor{tblgrey}{gray}{0.4}
+\newtabulinestyle{tblOuter=1.5pt tblgrey}
+%%%%%%%%%%%%%%%%%%%% DEFINES END
+
+%%%%%%%%%%%%%%%%%%%% CONFIGURABLES BEGIN
+\newcommand*{\labTitle}{\input{writings/title.txt}}
+\newcommand*{\authorI}{R. Chiang}
+\newcommand*{\surnameI}{Chiang}
+\newcommand*{\titleI}{\input{writings/chiang.txt}}
+\newcommand*{\authorII}{Q. Lam}
+\newcommand*{\titleII}{\input{writings/lam.txt}}
+\newcommand*{\authorIII}{T. Wei}
+\newcommand*{\titleIII}{\input{writings/wei.txt}}
+\newcommand*{\authorIV}{Y. Wu}
+\newcommand*{\titleIV}{\input{writings/wu.txt}}
+\newcommand*{\authorFive}{}
+\newcommand*{\titleFive}{}
+% dd mmmmmm yyyy
+\newcommand*{\receivedDate}{\input{writings/dueDate.gregorianDmy}\unskip}
+\newcommand*{\theAbstract}{%
+\input{writings/abstract.txt}
+}
+
+% Do not comment out any command declarations here. Instead, comment out \sections and \chapters down there
+% Do not forget to mention the significance of the experiment here.
+\newcommand*{\headingI}{Introduction}
+\newcommand*{\contentI}{%
+\input{writings/intro.txt}
+} % Ends intro
+
+\newcommand*{\headingII}{Theory}
+\newcommand*{\contentII}{%
+\input{writings/theory.txt}
+} % Ends contentI
+
+
+\newcommand*{\headingIII}{Method}
+\newcommand*{\contentIII}{%
+\input{writings/method.txt}
+} % Ends contentII
+
+% It is likely that \contentIV will need to be manually placed because the Data section may begin on a rightside column
+\newcommand*{\headingIV}{Data}
+\newcommand*{\contentIV}{%
+\input{writings/data.txt}
+} % Ends contentIII
+
+\newcommand*{\headingV}{Analysis}
+\newcommand*{\contentV}{%
+\input{writings/analysis.txt}
+} % Ends contentIV
+
+\newcommand*{\headingVI}{Sources of Error}
+\newcommand*{\contentVI}{%
+\input{writings/error.txt}
+} % Ends contentV
+
+\newcommand*{\headingVII}{Conclusion}
+\newcommand*{\contentVII}{%
+\input{writings/conclusion.txt}
+} % Ends contentVI
+
+% Always the last section. Alphabetical by surname. All sources must have people who can be held accountable.
+% BEWARE! Escape your underscores.
+\newcommand*{\sources}{%
+%\bibliographystyle{vbPlainnat}
+\noindent{}%
+\bibbysection
+} % Ends sources
+%%%%%%%%%%%%%%%%%%%% CONFIGURABLES END
+
+\begin{document}
+\pagestyle{plain}
+% Headers are 8pt. Verso pages have the page number in normal and the first author et al. in italics 
+% vB thinks et al. is et al (not an abbreviation...)
+\makeevenhead{plain}{\normalsize{}\textit{\thepage}}{\normalsize{}\textit{\surnameI{} et al}}{}
+\makeevenfoot{plain}{}{}{}
+% Recto pages have the name of the lab in italics and the page number
+\makeoddhead{plain}{}{\normalsize{}\textit{\labTitle}}{\normalsize{}\textit{\thepage}}
+\makeoddfoot{plain}{}{}{}
+
+\thispagestyle{empty}
+
+% The following allows the minipage to span both columns
+\twocolumn[
+	\begin{center}
+	%5.5in
+	\begin{minipage}{5.5in}
+	\begin{center}
+	\vspace{-0.1875in}
+	{\begin{Spacing}{1}\LARGE\textsc{\labTitle}\end{Spacing}}
+	\nameTitle{\authorI}{\titleI}
+	\nameTitle{\authorII}{\titleII}
+	\nameTitle{\authorIII}{\titleIII}
+	\nameTitle{\authorIV}{\titleIV}
+	%\nameTitle{\authorFive}{\titleFive}
+	{\tiny{}(Received \receivedDate)}
+	\end{center}
+	{\begin{Spacing}{1}\footnotesize\hspace{1em}\theAbstract\end{Spacing}}
+	\end{minipage}
+	\end{center}
+	\vspace{0in}
+]
+	% Comment out unneeded sections
+	% \section{\headingI}
+	\contentI
+	\section{\headingII}
+	\contentII
+	\section{\headingIII}
+	\contentIII
+	%\section{\headingIV}
+	\contentIV
+	\section{\headingV}
+	\contentV
+	\section{\headingVI}
+	\contentVI
+	\section{\headingVII}
+	\contentVII
+	\section{Sources}
+	\sources
+\end{document}
